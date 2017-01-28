@@ -1,2 +1,2 @@
 # Minigame
-Minigame in Minecraft PE
+Minigame in Minecraft PE. only supports Korean.
