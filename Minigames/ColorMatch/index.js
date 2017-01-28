@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 exports = (function() {
     var PlayerData = [];
     var colors = [{
