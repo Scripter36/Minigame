@@ -144,7 +144,7 @@ function loadModule(title) {
 
 function getOnlineModules(finishdo) {
     S.modules = loadModuleList();
-    readFromUrl("https://www.dropbox.com/s/8nhp2h286rdnk2z/MinigameList.txt?dl=1", finishdo);
+    readFromUrl("https://raw.githubusercontent.com/Scripter36/Minigame/master/MinigameList.json", finishdo);
 }
 
 let downloading = [];
