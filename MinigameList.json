@@ -1,1 +1,51 @@
-
+[
+	{
+		"name":"avoidAnvil",
+		"title":"모루피하기",
+		"subtitle":"모루를 피하세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/avoidAnvil/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/avoidAnvil/info.json"
+	},
+	{
+		"name":"Climb",
+		"title":"등반",
+		"subtitle":"모래를 타고 기반암으로 가세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Climb/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Climb/info.json"
+	},
+	{
+		"name":"ColorMatch",
+		"title":"컬러매치",
+		"subtitle":"양털의 색을 맞추어 살아남으세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ColorMatch/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ColorMatch/info.json"
+	},
+	{
+		"name":"Push",
+		"title":"밀치기",
+		"subtitle":"사라지는 발판 위에서 상대를 떨어뜨리세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Push/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Push/info.json"
+	},
+	{
+		"name":"Running",
+		"title":"런닝",
+		"subtitle":"유리 위를 뛰어다녀 상대를 떨어뜨리세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Running/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Running/info.json"
+	},
+	{
+		"name":"SlapWar",
+		"title":"싸다구전쟁",
+		"subtitle":"상대방의 싸다구를 때리세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/SlapWar/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/SlapWar/info.json"
+	},
+	{
+		"name":"Spleef",
+		"title":"스플리프",
+		"subtitle":"눈을 부숴 상대를 떨어뜨리세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Spleef/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Spleef/info.json"
+	}
+]
