@@ -6,8 +6,7 @@ exports = (function() {
     var backBlock = [];
     var gamePosition = [];
     var teleportCool = 0;
-    var explosion = [];
-    var helpMessage = [ /*밀치기*/ "[PVP " + S.T[3] + "가능" + S.T[0] + ", 블럭 캐기 " + S.T[2] + "불가능" + S.T[0] + "]", "점점 작아지는 발판 위에서 적을 떨어뜨리세요.", "떨어지면 탈락이며, 1명이 남을 때까지 진행됩니다."];
+    var helpMessage = [/*모루피하기*/"[PVP " + S.T[3] + "가능" + S.T[0] + ", 블럭 캐기 " + S.T[2] + "불가능" + S.T[0] + "]", "하늘에서 모루가 떨어집니다!", "모루에 맞으면 탈락이며, 1명이 남을 때까지 진행됩니다."];
     return {
         ended: false,
         onLoad: function() {
