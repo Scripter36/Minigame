@@ -22,7 +22,7 @@ exports = (function() {
             var p = Player.getEntity();
             var name = Player.getName(p);
             if (!started) {
-                for (var i = PlayerData.length; i >= 0; i--) {
+                for (var i = PlayerData.length - 1; i >= 0; i--) {
                     if (PlayerData[i].id === p) {
                         R_Server.sendPrivateChat(name, S.T[2] + "이미 참여하셨습니다.");
                         return;
@@ -46,7 +46,7 @@ exports = (function() {
                 if (messageCool <= 0) {
                     messageCool = 5;
                     R_Server.sendPopupMessage(S.T[0] + "게임에 참여하시려면 바닥을 터치하세요!");
-                    for (var i = PlayerData.length; i >= 0; i--) {
+                    for (var i = PlayerData.length - 1; i >= 0; i--) {
                         if (PlayerData[i].alive) R_Server.sendPrivatePopup(PlayerData[i].name, S.T[0] + "게임에 참여하셨습니다.");
                         else R_Server.sendPrivatePopup(PlayerData[i].name, S.T[0] + "게임에 관전으로 참여하셨습니다.");
                     }
@@ -104,7 +104,7 @@ exports = (function() {
                                 }
                             }
                         }
-                        for (var i = PlayerData.length; i >= 0; i--) {
+                        for (var i = PlayerData.length - 1; i >= 0; i--) {
                             if (PlayerData[i].alive) {
                                 Player.teleport(PlayerData[i].id, (gamePosition[0] + gamePosition[1]) / 2, 12, (gamePosition[2] + gamePosition[3]) / 2);
                             } else {
@@ -124,7 +124,7 @@ exports = (function() {
                 var aliveNum;
                 var firstBreak = true;
                 var secondBreak = true;
-                for (var i = PlayerData.length; i >= 0; i--) {
+                for (var i = PlayerData.length - 1; i >= 0; i--) {
                     if (!Player.isPlayer(PlayerData[i].id)) {
                         PlayerData.splice(i, 1);
                         continue;
@@ -165,7 +165,7 @@ exports = (function() {
                 if ( /*alive <= 1*/ false) {
                     if (aliveNum === undefined) R_Server("게임이 끝났습니다! 우승자: 없음");
                     else R_Server("게임이 끝났습니다! 우승자: " + S.T[1] + PlayerData[aliveNum].name);
-                    for (var i = PlayerData.length; i >= 0; i--) {
+                    for (var i = PlayerData.length - 1; i >= 0; i--) {
                         Player.teleport(PlayerData[i].id, backPosition[0], backPosition[1], backPosition[2]);
                     }
                     for (var i in backBlock) Level.setBlock(backBlock[i].x, backBlock[i].y, backBlock[i].z, backBlock[i].b, backBlock[i].bd);
@@ -178,11 +178,11 @@ exports = (function() {
         finish: function() {
             R_Server.sendChat("서버 관리자에 의해 게임이 종료되었습니다.", false, true);
             var names = [];
-            for (var i = PlayerData.length; i >= 0; i--) {
+            for (var i = PlayerData.length - 1; i >= 0; i--) {
                 if (PlayerData[i].alive) names.push(PlayerData[i].name);
             }
             R_Server.sendChat("생존자: " + S.T[1] + names.join(S.T[0] + ", " + S.T[1]) + S.T[0] + ".");
-            for (var i = PlayerData.length; i >= 0; i--) {
+            for (var i = PlayerData.length - 1; i >= 0; i--) {
                 Player.teleport(PlayerData[i].id, backPosition[0], backPosition[1], backPosition[2]);
             }
             for (var i in backBlock) Level.setBlock(backBlock[i].x, backBlock[i].y, backBlock[i].z, backBlock[i].b, backBlock[i].bd);
