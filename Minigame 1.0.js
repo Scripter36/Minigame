@@ -50,6 +50,7 @@ const BufferedOutputStream = java.io.BufferedOutputStream;
 const InputStreamReader = java.io.InputStreamReader;
 const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
 const LayoutParams = android.widget.RelativeLayout.LayoutParams;
+const blockLauncher = android.os.Environment.getDataDirectory().getAbsolutePath();
 let S = {
     T: ["§f", "§b", "§c", "§a"],
     rethodLoaded: false,
@@ -503,9 +504,9 @@ function showWindow() {
                                                         try {
                                                             scriptProgressText.setTextColor(Color.BLACK);
                                                             scriptProgressText.setText("준비 중...");
-                                                            new File(sdcard + "/games/com.mojang/minigames/" + json[index].name).mkdirs();
-                                                            download(json[index].path1, new File(sdcard + "/games/com.mojang/minigames/" + json[index].name + "/index.js"), scriptProgress, scriptProgressText, function() {
-                                                                download(json[index].path2, new File(sdcard + "/games/com.mojang/minigames/" + json[index].name + "/info.json"), scriptProgress, scriptProgressText, function() {
+                                                            new File(blockLauncher + "/Minigames/" + json[index].name).mkdirs();
+                                                            download(json[index].path1, new File(blockLauncher + "/Minigames/" + json[index].name + "/index.js"), scriptProgress, scriptProgressText, function() {
+                                                                download(json[index].path2, new File(blockLauncher + "/Minigames/" + json[index].name + "/info.json"), scriptProgress, scriptProgressText, function() {
                                                                     ctx.runOnUiThread(new Runnable({
                                                                         run: function() {
                                                                             try {
