@@ -50,7 +50,9 @@ const BufferedOutputStream = java.io.BufferedOutputStream;
 const InputStreamReader = java.io.InputStreamReader;
 const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
 const LayoutParams = android.widget.RelativeLayout.LayoutParams;
-const blockLauncher = android.os.Environment.getDataDirectory().getAbsolutePath();
+let blockLauncher;
+if (net.zhuoweizhang.mcpelauncher.Utils.isPro()) blockLauncher = android.os.Environment.getDataDirectory().getAbsolutePath() + "/data/net.zhuoweizhang.mcpelauncher.pro";
+else blockLauncher = android.os.Environment.getDataDirectory().getAbsolutePath() + "/data/net.zhuoweizhang.mcpelauncher";
 let S = {
     T: ["§f", "§b", "§c", "§a"],
     rethodLoaded: false,
@@ -107,7 +109,7 @@ function readFile(file) {
 }
 
 function loadModuleList() {
-    let file = new File(sdcard + "/games/com.mojang/minigames");
+    let file = new File(blockLauncher + "/Minigames");
     if (!file.exists()) file.mkdirs();
     let ans = [];
     for (let i of file.listFiles()) {
@@ -124,7 +126,7 @@ function loadModuleList() {
 }
 
 function loadModule(title) {
-    let file = new File(sdcard + "/games/com.mojang/minigames");
+    let file = new File(blockLauncher + "/Minigames");
     if (!file.exists()) file.mkdirs();
     for (let i of file.listFiles()) {
         if (i.isDirectory()) {
