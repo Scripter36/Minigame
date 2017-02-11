@@ -87,7 +87,7 @@ Player.teleport = function(e, x, y, z){
                 print("Error at " + e.lineNumber + ".\n Reason: " + e);
             }
         }
-    }));
+    })).start();
 };
 
 Level.setBlock = function(x, y, z, b, bd){
