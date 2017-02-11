@@ -76,10 +76,18 @@ function makeToast(message, length) {
 }
 
 Player.teleport = function(e, x, y, z){
-    // TODO: RethodPE 업뎃시 R_Player.setPosition(Player.getName(e), x, y, z) 형식으로 바꿀 것
-    Entity.setPosition(e, x, y, z);
-    //let entity = Level.spawnMob(x, y, z, 10);
-    //Entity.rideAnimal(e, entity);
+    let entity = Level.spawnMob(x, y, z, 10);
+    Entity.rideAnimal(e, entity);
+    new Thread(new Runnable({
+        run: function(){
+            try{
+                Thread.sleep(500);
+                Entity.remove(entity);
+            }catch(e){
+                print("Error at " + e.lineNumber + ".\n Reason: " + e);
+            }
+        }
+    }));
 };
 
 Level.setBlock = function(x, y, z, b, bd){
