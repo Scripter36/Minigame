@@ -178,7 +178,7 @@ exports = (function() {
                     Entity.addEffect(PlayerData[i].id, 16, 20, 0);
                     Entity.addEffect(PlayerData[i].id, 6, 20, 4);
                 }
-                if ( /*alive <= 1*/ false) {
+                if (alive <= 1) {
                     if (aliveNum === undefined) R_Server("게임이 끝났습니다! 우승자: 없음");
                     else R_Server("게임이 끝났습니다! 우승자: " + S.T[1] + PlayerData[aliveNum].name);
                     for (var i = PlayerData.length - 1 ; i >= 0 ; i--) {

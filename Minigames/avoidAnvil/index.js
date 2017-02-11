@@ -138,7 +138,7 @@ exports = (function() {
                         aliveNum = i;
                     }
                 }
-                if (/*alive <= 1*/false){
+                if (alive <= 1){
                     if (aliveNum === undefined) R_Server.sendChat("게임이 끝났습니다! 우승자: 없음");
                     else R_Server.sendChat("게임이 끝났습니다! 우승자: " + S.T[1] + PlayerData[aliveNum].name, false, true);
 
