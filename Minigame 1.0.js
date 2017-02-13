@@ -711,6 +711,9 @@ function leaveGame() {
 }
 
 function modTick() {
+    if (S.module !== undefined && S.module.modTick !== undefined) {
+        S.module.modTick();
+    }
     if (S.module !== undefined && S.module.modTick !== undefined) S.module.modTick();
     for (let i = blocks.length - 1; i >= 0; i--) {
         Level.setTile(blocks[i].x, blocks[i].y, blocks[i].z, blocks[i].b, blocks[i].bd);
