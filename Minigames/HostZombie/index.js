@@ -17,6 +17,8 @@ exports = (function() {
             closeDialog: "닫기",
             changetype: "어드민이 " + S.T[1] + "%0" + S.T[0] + " 님의 종족을 %1" + S.T[0] + "로 변경하셨습니다.",
             nopeople: "플레이어가 부족하여 게임이 불가능합니다.",
+            infect: "%0 님이 %1 님을 감염시켰습니다.",
+            kill: "%0 님이 %1 님을 죽였습니다.",
             finishMessage: S.T[1] + "게임이 종료되었습니다!" + "\n" +
                 S.T[0] + "우승: %0 !" + "\n" +
                 S.T[0] + "===== VIP =====" + "\n" +
@@ -72,6 +74,7 @@ exports = (function() {
     function startGame() {
         if (PlayerData.length < 2) {
             R_Server.sendChat(langData[lang].nopeople);
+            stopGame(false);
             return;
         }
         var random = Math.floor(Math.random() * PlayerData.length);
@@ -132,6 +135,7 @@ exports = (function() {
         }
         for (var i in PlayerData) Entity.addEffect(PlayerData[i].id, 7, 20, 4);
         gameData.reloadtag = true;
+        ended = true;
     }
 
     function PlayerDatatoString() {
@@ -287,7 +291,8 @@ exports = (function() {
             }
             if ((PlayerData[attacker].type === 1 || PlayerData[attacker].type === 2) && PlayerData[victor].type === 0) {
                 Entity.addEffect(PlayerData[victor].id, 7, 20, 4);
-                R_Server.sendChat(langData[lang].playerTypeColor[PlayerData[attacker].type] + langData[lang].playerType[PlayerData[attacker].type] + S.T[0] + " " + PlayerData[attacker].name + " 님이 " + langData[lang].playerTypeColor[PlayerData[victor].type] + langData[lang].playerType[PlayerData[victor].type] + S.T[0] + " " + PlayerData[victor].name + " 님을 감염시켰습니다.");
+                //R_Server.sendChat(langData[lang].playerTypeColor[PlayerData[attacker].type] + langData[lang].playerType[PlayerData[attacker].type] + S.T[0] + " " + PlayerData[attacker].name + " 님이 " + langData[lang].playerTypeColor[PlayerData[victor].type] + langData[lang].playerType[PlayerData[victor].type] + S.T[0] + " " + PlayerData[victor].name + " 님을 감염시켰습니다.");
+                R_Server.sendChat(langData[lang].kill.replace("%0", langData[lang].playerTypeColor[PlayerData[attacker].type] + langData[lang].playerType[PlayerData[attacker].type] + S.T[0] + " " + PlayerData[attacker].name).replace("%1", langData[lang].playerTypeColor[PlayerData[victor].type] + langData[lang].playerType[PlayerData[victor].type] + S.T[0] + " " + PlayerData[victor].name));
                 PlayerData[victor].type = 2;
                 PlayerData[attacker].infection++;
             }
@@ -302,11 +307,15 @@ exports = (function() {
                 }
             }
             if (murder === undefined || victor === undefined) return;
-            R_Server.sendChat(langData[lang].playerTypeColor[PlayerData[murder].type] + langData[lang].playerType[PlayerData[murder].type] + S.T[0] + " " + PlayerData[murder].name + " 님이 " + langData[lang].playerTypeColor[PlayerData[victor].type] + langData[lang].playerType[PlayerData[victor].type] + S.T[0] + " " + PlayerData[victor].name + " 님을 죽였습니다.");
+            //R_Server.sendChat(langData[lang].playerTypeColor[PlayerData[murder].type] + langData[lang].playerType[PlayerData[murder].type] + S.T[0] + " " + PlayerData[murder].name + " 님이 " + langData[lang].playerTypeColor[PlayerData[victor].type] + langData[lang].playerType[PlayerData[victor].type] + S.T[0] + " " + PlayerData[victor].name + " 님을 죽였습니다.");
+            R_Server.sendChat(langData[lang].kill.replace("%0", langData[lang].playerTypeColor[PlayerData[murder].type] + langData[lang].playerType[PlayerData[murder].type] + S.T[0] + " " + PlayerData[murder].name).replace("%1", langData[lang].playerTypeColor[PlayerData[victor].type] + langData[lang].playerType[PlayerData[victor].type] + S.T[0] + " " + PlayerData[victor].name));
             if (PlayerData[murder].type === 0) {
                 PlayerData[murder].kill++;
                 PlayerData[victor].death++;
             }
+        },
+        finish: function(){
+            stopGame(false);
         }
     };
 })();
