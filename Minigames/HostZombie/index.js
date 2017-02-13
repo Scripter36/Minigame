@@ -12,10 +12,6 @@ exports = (function() {
             pleaseTouch: "게임 참가: 블럭 터치, 관전: 웅크리고 블럭 터치",
             playerType: ["인간", "숙주좀비", "좀비", "관전자"],
             playerTypeColor: ["§f", "§c", "§6", "§b"],
-            buttonName: ["즉시 시작", "종족 설정"],
-            selectType: "종족 설정",
-            closeDialog: "닫기",
-            changetype: "어드민이 " + S.T[1] + "%0" + S.T[0] + " 님의 종족을 %1" + S.T[0] + "로 변경하셨습니다.",
             nopeople: "플레이어가 부족하여 게임이 불가능합니다.",
             infect: "%0 님이 %1 님을 감염시켰습니다.",
             kill: "%0 님이 %1 님을 죽였습니다.",
@@ -29,10 +25,22 @@ exports = (function() {
         },
         en_US: {
             readyTimeAnnounce: S.T[1] + "%1" + S.T[0] + " seconds left before the host zombie is born.",
+            gameTimeAnnounce: S.T[1] + "%0" + S.T[0] + "m " + S.T[1] + "%1" + S.T[0] + "s Left",
+            gameNotStarted: "The game hasn't started yet.",
+            readyGame: S.T[0] + "The game will be started!",
             pleaseTouch: "Play the game: Touch Block, Watch the game: Shift + Touch Block",
             playerType: ["Human", "Host Zombie", "Zombie", "Spectator"],
             playerTypeColor: ["§f", "§c", "§6", "§b"],
-            buttonName: ["Start now", "set Type", "see Player", "set Server Name", "set Notice"]
+            nopeople: "There are too less people to start the game.",
+            infect: "%0 infected %1.",
+            kill: "%0 killed %1.",
+            finishMessage: S.T[1] + "Game ended!" + "\n" +
+                S.T[0] + "Winner: %0 !" + "\n" +
+                S.T[0] + "===== VIP =====" + "\n" +
+                S.T[0] + "Kill: " + S.T[1] + "%1(%2)" + "\n" +
+                S.T[0] + "Death: " + S.T[1] + "%3(%4)" + "\n" +
+                S.T[0] + "Infect: " + S.T[1] + "%5(%6)" + "\n" +
+                S.T[0] + "Thanks for playing!"
         }
     }; //언어 데이터. 한국어, 영어
     var lang = ModPE.getLanguage(); //현재 언어를 불러온다
