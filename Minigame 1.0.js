@@ -75,22 +75,38 @@ function makeToast(message, length) {
     }));
 }
 
-Player.teleport = function(e, x, y, z){
+/*function deleteFile(path) {
+    if (!path.exists()) {
+        return false;
+    }
+    let files = path.listFiles();
+    for (let file of files) {
+        if (file.isDirectory()) {
+            deleteFile(file);
+        } else {
+            file.delete();
+        }
+    }
+    return path.delete();
+}
+deleteFile(new File(blockLauncher + "/Minigames"));*/
+
+Player.teleport = function(e, x, y, z) {
     let entity = Level.spawnMob(x, y, z, 10);
     Entity.rideAnimal(e, entity);
     new Thread(new Runnable({
-        run: function(){
-            try{
+        run: function() {
+            try {
                 Thread.sleep(500);
                 Entity.remove(entity);
-            }catch(e){
+            } catch (e) {
                 print("Error at " + e.lineNumber + ".\n Reason: " + e);
             }
         }
     })).start();
 };
 
-Level.setBlock = function(x, y, z, b, bd){
+Level.setBlock = function(x, y, z, b, bd) {
     Level.setTile(x, y, z, b, bd);
     if (Level.getTile(x, y, z) != b) blocks.push({
         x: x,
@@ -194,8 +210,7 @@ function download(path, file, progressbar, textview, finishdo) {
                                 Thread.sleep(250);
                                 ctx.runOnUiThread(updateRunnable);
                             }
-                        } catch (e) {
-                        }
+                        } catch (e) {}
                     }
                 }));
                 updateThread.start();
@@ -338,7 +353,7 @@ function showWindow() {
                                     let moduleTitleLayout = new LinearLayout(ctx);
                                     moduleTitleLayout.setOrientation(1);
                                     let moduleTitle = new TextView(ctx);
-                                    moduleTitle.setText(S.modules[i].title);
+                                    moduleTitle.setText(S.modules[i].title + S.modules[i].version);
                                     moduleTitle.setTextColor(Color.BLACK);
                                     moduleTitle.setTextSize(15);
                                     moduleTitle.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(width * 10 - height * 2, height));
@@ -464,7 +479,7 @@ function showWindow() {
                                                 let scriptTitleLayout = new LinearLayout(ctx);
                                                 scriptTitleLayout.setOrientation(1);
                                                 let scriptTitle = new TextView(ctx);
-                                                scriptTitle.setText(json[index].title);
+                                                scriptTitle.setText(json[index].title + " " + json[index].version);
                                                 scriptTitle.setTextColor(Color.BLACK);
                                                 scriptTitle.setTextSize(15);
                                                 scriptTitle.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(width * 6, height));
@@ -488,11 +503,18 @@ function showWindow() {
                                                 scriptControlLayout.addView(scriptProgressLayout);
                                                 let scriptButton = new Button(ctx);
                                                 let found = false;
+                                                let needUpdate = false;
                                                 for (let j in S.modules) {
-                                                    if (S.modules[j].name === json[index].name) found = true;
+                                                    if (S.modules[j].name === json[index].name) {
+                                                        found = true;
+                                                        if (CompareVersion(json[index].version, S.modules[j].version) !== 1) {
+                                                            needUpdate = true;
+                                                        }
+                                                    }
                                                 }
                                                 if (found) {
-                                                    scriptProgressText.setText("설치 완료");
+                                                    if (needUpdate) scriptProgressText.setText("업데이트 필요");
+                                                    else scriptProgressText.setText("설치 완료");
                                                 } else {
                                                     scriptProgressText.setText("설치 필요");
                                                 }
@@ -588,7 +610,7 @@ function showWindow() {
                         let moduleTitleLayout = new LinearLayout(ctx);
                         moduleTitleLayout.setOrientation(1);
                         let moduleTitle = new TextView(ctx);
-                        moduleTitle.setText(S.modules[i].title);
+                        moduleTitle.setText(S.modules[i].title + S.modules[i].version);
                         moduleTitle.setTextColor(Color.BLACK);
                         moduleTitle.setTextSize(15);
                         moduleTitle.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(width * 10 - height * 2, height));
@@ -625,7 +647,7 @@ function showWindow() {
 }
 
 function startGame(num) {
-    if (S.module !== undefined && S.module.finish !== undefined && !S.module.ended){
+    if (S.module !== undefined && S.module.finish !== undefined && !S.module.ended) {
         S.module.finish();
         return;
     }
@@ -635,6 +657,49 @@ function startGame(num) {
     } catch (e) {
         print("Error at " + e.lineNumber + "\n Reason: " + e);
     }
+}
+
+function CompareVersion(big, small) {
+    big = big.split(".");
+    small = small.split(".");
+    for (let i = 0; i < big.length && i < small.length; i++) {
+        let bv = parseInt(big[i]);
+        let sv = parseInt(small[i]);
+        if (bv > sv) {
+            return 0;
+        } else if (bv < sv) {
+            return 2;
+        }
+    }
+    if (big.length > small.length) return 0;
+    else if (big.length < small.length) return 2;
+    else return 1;
+}
+
+function checkUpdate() {
+    getOnlineModules(function(text) {
+        let update = [];
+        let data = JSON.parse(text);
+        S.modules = loadModuleList();
+        for (let i in S.modules) {
+            for (let j in data) {
+                if (S.modules[i].name === data[j].name) {
+                    let compare = CompareVersion(data[j].version, S.modules[i].version);
+                    if (compare === 0) {
+                        update.push(S.modules[i].title);
+                    }
+                }
+            }
+        }
+        let newGame = "";
+        if (data.length > S.modules.length) newGame = "\n다운로드받지 않은 미니게임이 있습니다.";
+        if (S.modules.length === 0) return;
+        if (update.length === 0) {
+            makeToast("모든 미니게임이 업데이트 되었습니다." + newGame);
+        } else {
+            makeToast("다음 " + update.length + "개의 미니게임에 업데이트가 필요합니다: " + update.join(", ") + newGame);
+        }
+    });
 }
 
 function newLevel() {
@@ -647,39 +712,40 @@ function leaveGame() {
 
 function modTick() {
     if (S.module !== undefined && S.module.modTick !== undefined) S.module.modTick();
-    for (let i = blocks.length - 1 ; i >= 0 ; i--){
+    for (let i = blocks.length - 1; i >= 0; i--) {
         Level.setTile(blocks[i].x, blocks[i].y, blocks[i].z, blocks[i].b, blocks[i].bd);
-        if (Level.getTile(blocks[i].x, blocks[i].y, blocks[i].z) == blocks[i].b){
+        if (Level.getTile(blocks[i].x, blocks[i].y, blocks[i].z) == blocks[i].b) {
             blocks.splice(i, 1);
         }
     }
 }
 
 function entityHurtHook(a, v, h) {
-    if (S.module !== undefined && S.module.entityHurtHook !== undefined){
+    if (S.module !== undefined && S.module.entityHurtHook !== undefined) {
         let result = S.module.entityHurtHook(a, v, h);
         if (result) preventDefault();
     }
 }
 
 function deathHook(m, v) {
-    if (S.module !== undefined && S.module.deathHook !== undefined){
+    if (S.module !== undefined && S.module.deathHook !== undefined) {
         let result = S.module.deathHook(m, v);
         if (result) preventDefault();
     }
 }
 
 function entityAddedHook(e) {
-    if (S.module !== undefined && S.module.entityAddedHook !== undefined){
+    if (S.module !== undefined && S.module.entityAddedHook !== undefined) {
         let result = S.module.entityAddedHook(e);
         if (result) preventDefault();
     }
 }
 
 function useItem(x, y, z, i, b, s, id, bd) {
-    if (S.module !== undefined && S.module.useItem !== undefined){
+    if (S.module !== undefined && S.module.useItem !== undefined) {
         let result = S.module.useItem(x, y, z, i, b, s, id, bd);
         if (result) preventDefault();
     }
 }
+checkUpdate();
 showButton();
