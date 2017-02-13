@@ -353,7 +353,7 @@ function showWindow() {
                                     let moduleTitleLayout = new LinearLayout(ctx);
                                     moduleTitleLayout.setOrientation(1);
                                     let moduleTitle = new TextView(ctx);
-                                    moduleTitle.setText(S.modules[i].title + S.modules[i].version);
+                                    moduleTitle.setText(S.modules[i].title + " " + S.modules[i].version);
                                     moduleTitle.setTextColor(Color.BLACK);
                                     moduleTitle.setTextSize(15);
                                     moduleTitle.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(width * 10 - height * 2, height));
@@ -610,7 +610,7 @@ function showWindow() {
                         let moduleTitleLayout = new LinearLayout(ctx);
                         moduleTitleLayout.setOrientation(1);
                         let moduleTitle = new TextView(ctx);
-                        moduleTitle.setText(S.modules[i].title + S.modules[i].version);
+                        moduleTitle.setText(S.modules[i].title + " " + S.modules[i].version);
                         moduleTitle.setTextColor(Color.BLACK);
                         moduleTitle.setTextSize(15);
                         moduleTitle.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(width * 10 - height * 2, height));
