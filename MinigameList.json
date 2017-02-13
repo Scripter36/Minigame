@@ -24,6 +24,14 @@
 		"version":"1.0.0"
 	},
 	{
+	    "name":"HostZombie",
+	    "title":"숙주좀비",
+	    "subtitle":"감염시키거나, 살아남으세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/HostZombie/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/HostZombie/info.json",
+	    "version":"1.0.0"
+	},
+	{
 		"name":"Push",
 		"title":"밀치기",
 		"subtitle":"사라지는 발판 위에서 상대를 떨어뜨리세요.",
