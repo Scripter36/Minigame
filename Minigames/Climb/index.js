@@ -133,6 +133,7 @@ exports = (function() {
                     }
                     Entity.addEffect(PlayerData[i].id, 16, 20, 0);
                     Entity.addEffect(PlayerData[i].id, 6, 20, 4);
+                    Entity.addEffect(PlayerData[i].id, 11, 20, 4);
                 }
             }
         },
