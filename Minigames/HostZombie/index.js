@@ -47,7 +47,7 @@ exports = (function() {
         reloadtag: false
     }; //게임의 데이터.
     var cm = clientMessage;
-
+    var tiptime = 0;
     function readyGame() {
         gameData.started = true;
         R_Server.sendChat(langData[lang].readyGame);
@@ -202,12 +202,14 @@ exports = (function() {
             }
         },
         modTick: function() {
+            tiptime++;
+            if (tiptime === 20) tiptime = 0;
             if (!gameData.ready) {
                 if (!gameData.started) {
-                    R_Server.sendTipMessage(langData[lang].gameNotStarted);
+                    if (tiptime === 0) R_Server.sendTipMessage(langData[lang].gameNotStarted);
                     return;
                 }
-                R_Server.sendTipMessage(langData[lang].pleaseTouch);
+                if (tiptime === 0) R_Server.sendTipMessage(langData[lang].pleaseTouch);
                 return;
             }
             if (gameData.reloadtag) {
@@ -258,7 +260,7 @@ exports = (function() {
                 stopGame(true, 2);
             }
             var time = gameData.gameTime / 20;
-            R_Server.sendTipMessage(PlayerDatatoString() + "\n" + langData[lang].gameTimeAnnounce.replace("%0", Math.floor(time / 60)).replace("%1", time % 60));
+            if (tiptime === 0) R_Server.sendTipMessage(PlayerDatatoString() + "\n" + langData[lang].gameTimeAnnounce.replace("%0", Math.floor(time / 60)).replace("%1", time % 60));
         },
         entityHurtHook: function(a, v, h) {
             if (!gameData.ready) return;
