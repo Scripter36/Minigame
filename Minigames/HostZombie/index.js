@@ -50,7 +50,7 @@ exports = (function() {
 
     function readyGame() {
         gameData.started = true;
-        sendChat(langData[lang].readyGame);
+        R_Server.sendChat(langData[lang].readyGame);
         new Thread(new Runnable({
             run: function() {
                 try {
@@ -58,7 +58,7 @@ exports = (function() {
                         Thread.sleep(1000);
                         gameData.readyTime -= 20;
                         if (gameData.readyTime <= 0) break;
-                        if (gameData.readyTime % 200 === 0) sendChat(langData[lang].readyTimeAnnounce.replace("%1", gameData.readyTime / 20));
+                        if (gameData.readyTime % 200 === 0) R_Server.sendChat(langData[lang].readyTimeAnnounce.replace("%1", gameData.readyTime / 20));
                     }
                 } catch (e) {
 
@@ -71,12 +71,12 @@ exports = (function() {
 
     function startGame() {
         if (PlayerData.length < 2) {
-            sendChat(langData[lang].nopeople);
+            R_Server.sendChat(langData[lang].nopeople);
             return;
         }
         var random = Math.floor(Math.random() * PlayerData.length);
         PlayerData[random].type = 1;
-        sendChat(PlayerDatatoString());
+        R_Server.sendChat(PlayerDatatoString());
         for (var i in PlayerData) if (PlayerData[i].type !== 0) Entity.addEffect(PlayerData[i].id, 7, 20, 4);
         new Thread(new Runnable({
             run: function() {
@@ -127,7 +127,7 @@ exports = (function() {
                     infectionVIPName.push(PlayerData[i].name);
                 }
             }
-            sendChat(langData[lang].finishMessage.replace("%0", langData[lang].playerTypeColor[winner] + langData[lang].playerType[winner] + S.T[0]).replace("%1", killVIPName.join(S.T[0] + ", " + S.T[1])).replace("%2", PlayerData[killVIP[0]].kill).replace("%3", deathVIPName.join(S.T[0] + ", " + S.T[1])).replace("%4", PlayerData[deathVIP[0]].death).replace("%5", infectionVIPName.join(S.T[0] + ", " + S.T[1])).replace("%6", PlayerData[infectionVIP[0]].infection));
+            R_Server.sendChat(langData[lang].finishMessage.replace("%0", langData[lang].playerTypeColor[winner] + langData[lang].playerType[winner] + S.T[0]).replace("%1", killVIPName.join(S.T[0] + ", " + S.T[1])).replace("%2", PlayerData[killVIP[0]].kill).replace("%3", deathVIPName.join(S.T[0] + ", " + S.T[1])).replace("%4", PlayerData[deathVIP[0]].death).replace("%5", infectionVIPName.join(S.T[0] + ", " + S.T[1])).replace("%6", PlayerData[infectionVIP[0]].infection));
             gameData.finishString = langData[lang].finishMessage.replace("%0", langData[lang].playerTypeColor[winner] + langData[lang].playerType[winner] + S.T[0]).replace("%1", killVIPName.join(S.T[0] + ", " + S.T[1])).replace("%2", PlayerData[killVIP[0]].kill).replace("%3", deathVIPName.join(S.T[0] + ", " + S.T[1])).replace("%4", PlayerData[deathVIP[0]].death).replace("%5", infectionVIPName.join(S.T[0] + ", " + S.T[1])).replace("%6", PlayerData[infectionVIP[0]].infection);
         }
         for (var i in PlayerData) Entity.addEffect(PlayerData[i].id, 7, 20, 4);
@@ -184,7 +184,7 @@ exports = (function() {
                     death: 0,
                     infection: 0
                 });
-                sendChat(langData[lang].camein.replace("%0", Player.getName(player)).replace("%1", langData[lang].playerTypeColor[0] + langData[lang].playerType[0]));
+                R_Server.sendChat(langData[lang].camein.replace("%0", Player.getName(player)).replace("%1", langData[lang].playerTypeColor[0] + langData[lang].playerType[0]));
             } else if (gameData.ready && Entity.isSneaking(player)) {
                 for (var i in PlayerData) {
                     if (PlayerData[i].type !== 0) continue;
@@ -212,7 +212,7 @@ exports = (function() {
             }
             if (gameData.reloadtag) {
                 if (PlayerData.length === 0) {
-                    sendChat(gameData.finishString);
+                    R_Server.sendChat(gameData.finishString);
                     gameData = {
                         started: false,
                         readyMaxTime: 1000,
@@ -285,7 +285,7 @@ exports = (function() {
             }
             if ((PlayerData[attacker].type === 1 || PlayerData[attacker].type === 2) && PlayerData[victor].type === 0) {
                 Entity.addEffect(PlayerData[victor].id, 7, 20, 4);
-                sendChat(langData[lang].playerTypeColor[PlayerData[attacker].type] + langData[lang].playerType[PlayerData[attacker].type] + S.T[0] + " " + PlayerData[attacker].name + " 님이 " + langData[lang].playerTypeColor[PlayerData[victor].type] + langData[lang].playerType[PlayerData[victor].type] + S.T[0] + " " + PlayerData[victor].name + " 님을 감염시켰습니다.");
+                R_Server.sendChat(langData[lang].playerTypeColor[PlayerData[attacker].type] + langData[lang].playerType[PlayerData[attacker].type] + S.T[0] + " " + PlayerData[attacker].name + " 님이 " + langData[lang].playerTypeColor[PlayerData[victor].type] + langData[lang].playerType[PlayerData[victor].type] + S.T[0] + " " + PlayerData[victor].name + " 님을 감염시켰습니다.");
                 PlayerData[victor].type = 2;
                 PlayerData[attacker].infection++;
             }
@@ -300,7 +300,7 @@ exports = (function() {
                 }
             }
             if (murder === undefined || victor === undefined) return;
-            sendChat(langData[lang].playerTypeColor[PlayerData[murder].type] + langData[lang].playerType[PlayerData[murder].type] + S.T[0] + " " + PlayerData[murder].name + " 님이 " + langData[lang].playerTypeColor[PlayerData[victor].type] + langData[lang].playerType[PlayerData[victor].type] + S.T[0] + " " + PlayerData[victor].name + " 님을 죽였습니다.");
+            R_Server.sendChat(langData[lang].playerTypeColor[PlayerData[murder].type] + langData[lang].playerType[PlayerData[murder].type] + S.T[0] + " " + PlayerData[murder].name + " 님이 " + langData[lang].playerTypeColor[PlayerData[victor].type] + langData[lang].playerType[PlayerData[victor].type] + S.T[0] + " " + PlayerData[victor].name + " 님을 죽였습니다.");
             if (PlayerData[murder].type === 0) {
                 PlayerData[murder].kill++;
                 PlayerData[victor].death++;
