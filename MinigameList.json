@@ -13,7 +13,7 @@
 		"subtitle":"모래를 타고 기반암으로 가세요.",
 		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Climb/index.js",
 		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Climb/info.json",
-		"version":"1.0.1"
+		"version":"1.0.0"
 	},
 	{
 		"name":"ColorMatch",
