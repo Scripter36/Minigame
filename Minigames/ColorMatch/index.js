@@ -69,7 +69,7 @@ exports = (function() {
         },
         modTick: function() {
             if (this.ended) return;
-            for (var i = PlayerData.length - 1 ; i >= 0 ; i++){
+            for (var i = PlayerData.length - 1 ; i >= 0 ; i--){
                 if (!Player.isPlayer(PlayerData[i].id)) {
                     PlayerData.splice(i, 1);
                     continue;
@@ -195,7 +195,7 @@ exports = (function() {
                     for (var i = PlayerData.length - 1 ; i >= 0 ; i--) {
                         Player.teleport(PlayerData[i].id, backPosition[0], backPosition[1], backPosition[2]);
                     }
-                    for (var i = backBlock.length - 1 ; i >= 0 ; i++) Level.setBlock(backBlock[i].x, backBlock[i].y, backBlock[i].z, backBlock[i].b, backBlock[i].bd);
+                    for (var i = backBlock.length - 1 ; i >= 0 ; i--) Level.setBlock(backBlock[i].x, backBlock[i].y, backBlock[i].z, backBlock[i].b, backBlock[i].bd);
                     this.ended = true;
                     R_Server.protectBlock(false);
                     return;
@@ -230,7 +230,7 @@ exports = (function() {
                             for (var i = PlayerData.length - 1 ; i >= 0 ; i--) {
                                 Player.teleport(PlayerData[i].id, backPosition[0], backPosition[1], backPosition[2]);
                             }
-                            for (var i = backBlock.length - 1 ; i >= 0 ; i++) Level.setBlock(backBlock[i].x, backBlock[i].y, backBlock[i].z, backBlock[i].b, backBlock[i].bd);
+                            for (var i = backBlock.length - 1 ; i >= 0 ; i--) Level.setBlock(backBlock[i].x, backBlock[i].y, backBlock[i].z, backBlock[i].b, backBlock[i].bd);
                             this.ended = true;
                             R_Server.protectBlock(false);
                             return;
@@ -297,7 +297,7 @@ exports = (function() {
             for (var i = PlayerData.length - 1 ; i >= 0 ; i--) {
                 Player.teleport(PlayerData[i].id, backPosition[0], backPosition[1], backPosition[2]);
             }
-            for (var i = backBlock.length - 1 ; i >= 0 ; i++) Level.setBlock(backBlock[i].x, backBlock[i].y, backBlock[i].z, backBlock[i].b, backBlock[i].bd);
+            for (var i = backBlock.length - 1 ; i >= 0 ; i--) Level.setBlock(backBlock[i].x, backBlock[i].y, backBlock[i].z, backBlock[i].b, backBlock[i].bd);
             this.ended = true;
             R_Server.protectBlock(false);
             return;

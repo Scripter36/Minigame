@@ -18,7 +18,7 @@ exports = (function() {
         },
         modTick: function() {
             if (this.ended) return;
-            for (var i = PlayerData.length - 1 ; i >= 0 ; i++){
+            for (var i = PlayerData.length - 1 ; i >= 0 ; i--){
                 if (!Player.isPlayer(PlayerData[i].id)) {
                     PlayerData.splice(i, 1);
                     continue;
@@ -132,7 +132,7 @@ exports = (function() {
                         for (var j in entities){
                             if (Entity.getEntityTypeId(entities[j]) === 66) Entity.remove(entities[j]);
                         }
-                        for (var j = backBlock.length - 1 ; j >= 0 ; j++) Level.setBlock(backBlock[j].x, backBlock[j].y, backBlock[j].z, backBlock[j].b, backBlock[j].bd);
+                        for (var j = backBlock.length - 1 ; j >= 0 ; j--) Level.setBlock(backBlock[j].x, backBlock[j].y, backBlock[j].z, backBlock[j].b, backBlock[j].bd);
                         this.ended = true;
                         R_Server.protectBlock(false);
                         return;
@@ -203,7 +203,7 @@ exports = (function() {
             for (var j in entities){
                 if (Entity.getEntityTypeId(entities[j]) === 66) Entity.remove(entities[j]);
             }
-            for (var j = backBlock.length - 1 ; j >= 0 ; j++) Level.setBlock(backBlock[j].x, backBlock[j].y, backBlock[j].z, backBlock[j].b, backBlock[j].bd);
+            for (var j = backBlock.length - 1 ; j >= 0 ; j--) Level.setBlock(backBlock[j].x, backBlock[j].y, backBlock[j].z, backBlock[j].b, backBlock[j].bd);
             this.ended = true;
             R_Server.protectBlock(false);
             return;
