@@ -18,6 +18,12 @@ exports = (function() {
         },
         modTick: function() {
             if (this.ended) return;
+            for (var i = PlayerData.length - 1 ; i >= 0 ; i++){
+                if (!Player.isPlayer(PlayerData[i].id)) {
+                    PlayerData.splice(i, 1);
+                    continue;
+                }
+            }
             if (!started) {
                 R_Server.sendPopupMessage(S.T[0] + "게임에 참여하시려면 바닥을 터치하세요!");
                 for (var i = PlayerData.length - 1 ; i >= 0 ; i--) {

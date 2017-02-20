@@ -19,6 +19,12 @@ exports = (function() {
         },
         useItem: function(x, y, z, i, b, s, id, bd) {
             if (this.ended) return;
+            for (var i = PlayerData.length - 1 ; i >= 0 ; i++){
+                if (!Player.isPlayer(PlayerData[i].id)) {
+                    PlayerData.splice(i, 1);
+                    continue;
+                }
+            }
             var p = Player.getEntity();
             var name = Player.getName(p);
             if (!started) {
