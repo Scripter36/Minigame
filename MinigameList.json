@@ -62,5 +62,13 @@
 		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Spleef/index.js",
 		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/Spleef/info.json",
 		"version":"1.0.0"
+	},
+	{
+	    "name":"TNTRun",
+	    "title":"폭탄 옮기기",
+	    "subtitle":"상대에게 폭탄을 옮기세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/TNTRun/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/TNTRun/info.json",
+	    "version":"1.0.0"
 	}
 ]
