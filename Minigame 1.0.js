@@ -75,6 +75,10 @@ function makeToast(message, length) {
     }));
 }
 
+function isInstalled(name) {
+    return ctx.getPackageManager().getLaunchIntentForPackage(name) !== null;
+}
+
 /*function deleteFile(path) {
     if (!path.exists()) {
         return false;
@@ -174,6 +178,8 @@ function getOnlineModules(finishdo) {
     readFromUrl("https://raw.githubusercontent.com/Scripter36/Minigame/master/MinigameList.json", finishdo);
 }
 
+
+
 let downloading = [];
 
 function download(path, file, progressbar, textview, finishdo) {
@@ -223,6 +229,70 @@ function download(path, file, progressbar, textview, finishdo) {
                 bos.close();
                 finishdo();
                 downloading.splice(downloading.indexOf(path), 1);
+            } catch (e) {
+                print(e);
+                downloading.splice(downloading.indexOf(path), 1);
+            }
+        }
+    }));
+    thread.start();
+}
+
+function downloadAPK(path, file, progressbar, textview, finishdo) {
+    file.delete();
+    downloading.push({
+        path: path,
+        textView: textview,
+        progressBar: progressbar
+    });
+    let index = downloading.length - 1;
+    var thread = new java.lang.Thread(new java.lang.Runnable({
+        run: function() {
+            try {
+                let request = new android.app.DownloadManager.Request(android.net.Uri.parse(path));
+                request.setNotificationVisibility(0);
+                let name = file.getName();
+                request.setDestinationInExternalPublicDir(new File(file.getAbsolutePath().replace(sdcard, "").replace(name, "")), name);
+                let dm = ctx.getSystemService(android.content.Context.DOWNLOAD_SERVICE);
+                let id = dm.enqueue(request);
+                var bytes_total;
+                var bytes_downloaded;
+                let updateRunnable = new Runnable({
+                    run: function() {
+                        try {
+                            if (bytes_total === undefined || bytes_downloaded === undefined) return;
+                            downloading[index].progressBar.setMax(bytes_total);
+                            downloading[index].progressBar.setProgress(bytes_downloaded);
+                            downloading[index].textView.setText(Math.floor(bytes_downloaded / bytes_total * 100) + "% (" + Math.floor(bytes_downloaded / 1024) + " KB)");
+                        } catch (e) {}
+                    }
+                });
+                let updateThread = new Thread(new Runnable({
+                    run: function() {
+                        try {
+                            while (!Thread.currentThread().isInterrupted()) {
+                                let q = new android.app.DownloadManager.Query();
+                                let ids = java.lang.reflect.Array.newInstance(java.lang.Long.TYPE, 1);
+                                ids[0] = id;
+                                q.setFilterById(ids);
+                                let c = ctx.getSystemService(android.content.Context.DOWNLOAD_SERVICE).query(q);
+                                if (c.moveToFirst()) {
+                                    bytes_total = c.getInt(c.getColumnIndex(android.app.DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+                                    bytes_downloaded = c.getInt(c.getColumnIndex(android.app.DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+                                    ctx.runOnUiThread(updateRunnable);
+                                    let status = c.getInt(c.getColumnIndex(android.app.DownloadManager.COLUMN_STATUS));
+                                    if (status == android.app.DownloadManager.STATUS_SUCCESSFUL) {
+                                        updateThread.interrupt();
+                                        downloading.splice(downloading.indexOf(path), 1);
+                                        finishdo();
+                                    }
+                                }
+                                Thread.sleep(50);
+                            }
+                        } catch (e) {}
+                    }
+                }));
+                updateThread.start();
             } catch (e) {
                 print(e);
                 downloading.splice(downloading.indexOf(path), 1);
@@ -425,8 +495,18 @@ function showWindow() {
                             let addonProgressText = new TextView(ctx);
                             if (S.rethodLoaded) addonProgressText.setText("설치 완료");
                             else {
-                                addonProgressText.setText("설치 필요");
-                                addonProgressText.setTextColor(Color.parseColor("#FF4081"));
+                                if (isInstalled()) {
+                                    if (new File(sdcard + "/games/com.mojang/RethodPEDex.dex").exists()) {
+                                        addonProgressText.setText("재부팅 필요");
+                                        addonProgressText.setTextColor(Color.parseColor("#FF4081"));
+                                    } else {
+                                        addonProgressText.setText("패치 필요");
+                                        addonProgressText.setTextColor(Color.parseColor("#FF4081"));
+                                    }
+                                } else {
+                                    addonProgressText.setText("설치 필요");
+                                    addonProgressText.setTextColor(Color.parseColor("#FF4081"));
+                                }
                             }
                             addonProgressText.setSingleLine(true);
                             addonProgressText.setLayoutParams(new android.widget.RelativeLayout.LayoutParams(width * 4 - height * 2, height));
@@ -435,8 +515,26 @@ function showWindow() {
                             let addonButton = new Button(ctx);
                             addonButton.setText("설치");
                             if (S.rethodLoaded) addonButton.setEnabled(false);
+                            let addonDownloadPath = "";
+                            let minecraftVersion = ModPE.getMinecraftVersion();
+                            if (minecraftVersion.startsWith("1.0.0")) {
+                                addonDownloadPath = "https://github.com/ljuwon321/RethodPE-APK/raw/master/1.0.0.16/";
+                            } else if (minecraftVersion.startsWith("1.0.2")) {
+                                addonDownloadPath = "https://github.com/ljuwon321/RethodPE-APK/raw/master/1.0.2.1/";
+                            } else if (minecraftVersion.startsWith("1.0.3")) {
+                                addonDownloadPath = "https://github.com/ljuwon321/RethodPE-APK/raw/master/1.0.3.12/";
+                            } else {
+                                addonProgressText.setText("호환되지 않음");
+                                addonProgressText.setTextColor(Color.parseColor("#FF4081"));
+                                addonButton.setEnabled(false);
+                            }
+                            if (net.zhuoweizhang.mcpelauncher.Utils.isPro()) {
+                                addonDownloadPath += "RethodPE%20for%20PRO.apk";
+                            } else {
+                                addonDownloadPath += "RethodPE%20for%20FREE.apk";
+                            }
                             for (let i in downloading) {
-                                if (downloading[i].path === "https://www.dropbox.com/s/najcmuwwghpql0f/RethodPE%20for%20PRO-u.apk?dl=1") {
+                                if (downloading[i].path === addonDownloadPath) {
                                     downloading[i].textView = addonProgressText;
                                     downloading[i].progressBar = addonProgress;
                                     addonButton.setEnabled(false);
@@ -447,12 +545,12 @@ function showWindow() {
                                     try {
                                         addonProgressText.setTextColor(Color.BLACK);
                                         addonProgressText.setText("준비 중...");
-                                        download("https://www.dropbox.com/s/najcmuwwghpql0f/RethodPE%20for%20PRO-u.apk?dl=1", new File(sdcard + "/RethodPE.apk"), addonProgress, addonProgressText, function() {
+                                        downloadAPK(addonDownloadPath, new File(sdcard + "/RethodPE.apk"), addonProgress, addonProgressText, function() {
                                             ctx.runOnUiThread(new Runnable({
                                                 run: function() {
                                                     try {
-                                                        addonProgressText.setText("설치 완료.");
                                                         installAPK(sdcard + "/RethodPE.apk");
+                                                        addonProgressText.setText("설치 완료.");
                                                     } catch (e) {
                                                         print(e);
                                                     }
