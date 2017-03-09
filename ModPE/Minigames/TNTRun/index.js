@@ -136,7 +136,7 @@ exports = (function() {
                     if (teleportCool === 0){
                         var owner = Math.floor(Math.random() * PlayerData.length);
                         TNTData.owner = owner;
-                        TNTData.id = Level.spawnMob(65, Entity.getX(PlayerData[TNTData.owner].id), Entity.getY(PlayerData[TNTData.owner].id) + 1.5, Entity.getZ(PlayerData[TNTData.owner].id));
+                        TNTData.id = Level.spawnMob(Entity.getX(PlayerData[TNTData.owner].id), Entity.getY(PlayerData[TNTData.owner].id) + 1.5, Entity.getZ(PlayerData[TNTData.owner].id), 65);
                         R_Server.sendChat(S.T[1] + PlayerData[TNTData.owner].name + S.T[0] + " 님께 폭탄이 주어졌습니다!");
                     }
                     return;
@@ -176,13 +176,13 @@ exports = (function() {
                     var owner = Math.floor(Math.random() * PlayerData.length);
                     TNTData.owner = owner;
                     Entity.remove(TNTData.id);
-                    TNTData.id = Level.spawnMob(65, Entity.getX(PlayerData[TNTData.owner].id), Entity.getY(PlayerData[TNTData.owner].id) + 1.5, Entity.getZ(PlayerData[TNTData.owner].id));
+                    TNTData.id = Level.spawnMob(Entity.getX(PlayerData[TNTData.owner].id), Entity.getY(PlayerData[TNTData.owner].id) + 1.5, Entity.getZ(PlayerData[TNTData.owner].id), 65);
                     R_Server.sendChat(S.T[1] + PlayerData[TNTData.owner].name + S.T[0] + " 님께 폭탄이 주어졌습니다!");
                     TNTData.time = 100;
                     return;
                 }
                 Entity.remove(TNTData.id);
-                TNTData.id = Level.spawnMob(65, Entity.getX(PlayerData[TNTData.owner].id), Entity.getY(PlayerData[TNTData.owner].id) + 1.5, Entity.getZ(PlayerData[TNTData.owner].id));
+                TNTData.id = Level.spawnMob(Entity.getX(PlayerData[TNTData.owner].id), Entity.getY(PlayerData[TNTData.owner].id) + 1.5, Entity.getZ(PlayerData[TNTData.owner].id), 65);
             }
         },
         useItem: function(x, y, z, item, b, s, id, bd) {
@@ -220,7 +220,7 @@ exports = (function() {
                 TNTData.owner = vn;
                 R_Server.sendChat(S.T[1] + PlayerData[TNTData.owner].name + S.T[0] + " 님께 폭탄이 옮겨졌습니다!");
                 Entity.remove(TNTData.id);
-                TNTData.id = Level.spawnMob(65, Entity.getX(PlayerData[TNTData.owner].id), Entity.getY(PlayerData[TNTData.owner].id) + 1.5, Entity.getZ(PlayerData[TNTData.owner].id));
+                TNTData.id = Level.spawnMob(Entity.getX(PlayerData[TNTData.owner].id), Entity.getY(PlayerData[TNTData.owner].id) + 1.5, Entity.getZ(PlayerData[TNTData.owner].id), 65);
                 return false;
             }
             return true;
