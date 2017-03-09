@@ -1,0 +1,74 @@
+[
+	{
+		"name":"avoidAnvil",
+		"title":"모루피하기",
+		"subtitle":"모루를 피하세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/avoidAnvil/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/avoidAnvil/info.json",
+		"version":"1.0.0"
+	},
+	{
+		"name":"Climb",
+		"title":"등반",
+		"subtitle":"모래를 타고 기반암으로 가세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/Climb/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/Climb/info.json",
+		"version":"1.0.0"
+	},
+	{
+		"name":"ColorMatch",
+		"title":"컬러매치",
+		"subtitle":"양털의 색을 맞추어 살아남으세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/ColorMatch/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/ColorMatch/info.json",
+		"version":"1.0.0"
+	},
+	{
+	    "name":"HostZombie",
+	    "title":"숙주좀비",
+	    "subtitle":"감염시키거나, 살아남으세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/HostZombie/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/HostZombie/info.json",
+	    "version":"1.0.0"
+	},
+	{
+		"name":"Push",
+		"title":"밀치기",
+		"subtitle":"사라지는 발판 위에서 상대를 떨어뜨리세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/Push/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/Push/info.json",
+		"version":"1.0.0"
+	},
+	{
+		"name":"Running",
+		"title":"런닝",
+		"subtitle":"유리 위를 뛰어다녀 상대를 떨어뜨리세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/Running/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/Running/info.json",
+		"version":"1.0.0"
+	},
+	{
+		"name":"SlapWar",
+		"title":"싸다구전쟁",
+		"subtitle":"상대방의 싸다구를 때리세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/SlapWar/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/SlapWar/info.json",
+		"version":"1.0.0"
+	},
+	{
+		"name":"Spleef",
+		"title":"스플리프",
+		"subtitle":"눈을 부숴 상대를 떨어뜨리세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/Spleef/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/Spleef/info.json",
+		"version":"1.0.0"
+	},
+	{
+	    "name":"TNTRun",
+	    "title":"폭탄 옮기기",
+	    "subtitle":"상대에게 폭탄을 옮기세요.",
+		"path1":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/TNTRun/index.js",
+		"path2":"https://raw.githubusercontent.com/Scripter36/Minigame/master/Minigames/ModPE/TNTRun/info.json",
+	    "version":"1.0.0"
+	}
+]
