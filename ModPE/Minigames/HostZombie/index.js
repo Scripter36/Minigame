@@ -143,7 +143,7 @@ exports = (function() {
         }
         for (var i in PlayerData) Entity.addEffect(PlayerData[i].id, 7, 20, 4);
         gameData.reloadtag = true;
-        this.ended = true;
+        willReturn.ended = true;
     }
 
     function PlayerDatatoString() {
@@ -163,7 +163,7 @@ exports = (function() {
             langData[lang].playerTypeColor[0] + langData[lang].playerType[0] + S.T[0] + ": " + S.T[1] + human.join(S.T[0] + ", " + S.T[1]) + "\n" +
             langData[lang].playerTypeColor[2] + langData[lang].playerType[2] + S.T[0] + ": " + S.T[1] + zombie.join(S.T[0] + ", " + S.T[1]);
     }
-    return {
+    var willReturn = {
         ended: false,
         onLoad: function() {
             var lang = ModPE.getLanguage(); //현재 언어를 불러온다
@@ -175,6 +175,7 @@ exports = (function() {
             readyGame();
         },
         useItem: function(x, y, z, i, b, s, id, bd) {
+            if (this.ended) return;
             var player = Player.getEntity();
             if (gameData.started && !gameData.ready && Entity.isSneaking(player)) {
                 for (var i in PlayerData)
@@ -214,6 +215,7 @@ exports = (function() {
             }
         },
         modTick: function() {
+            if (this.ended) return;
             tiptime++;
             if (tiptime === 20) tiptime = 0;
             if (!gameData.ready) {
@@ -275,6 +277,7 @@ exports = (function() {
             if (tiptime === 0) R_Server.sendTipMessage(PlayerDatatoString() + "\n" + langData[lang].gameTimeAnnounce.replace("%0", Math.floor(time / 60)).replace("%1", time % 60));
         },
         entityHurtHook: function(a, v, h) {
+            if (this.ended) return;
             if (!gameData.ready) return;
             var attacker, victor;
             for (var i in PlayerData) {
@@ -306,6 +309,7 @@ exports = (function() {
             }
         },
         deathHook: function(m, v) {
+            if (this.ended) return;
             var murder, victor;
             for (var i in PlayerData) {
                 if (PlayerData[i].name === Player.getName(m).split("] ")[1] || PlayerData[i].name === Player.getName(m)) {
@@ -323,7 +327,11 @@ exports = (function() {
             }
         },
         finish: function(){
-            stopGame(false);
+            for (var i in PlayerData) Entity.addEffect(PlayerData[i].id, 7, 20, 4);
+            gameData.reloadtag = true;
+            this.ended = true;
         }
     };
+
+    return willReturn;
 })();
