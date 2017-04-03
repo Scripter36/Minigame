@@ -175,7 +175,7 @@ function loadModule(title) {
 
 function getOnlineModules(finishdo) {
     S.modules = loadModuleList();
-    readFromUrl("https://raw.githubusercontent.com/Scripter36/Minigame/master/MinigameList.json", finishdo);
+    readFromUrl("https://raw.githubusercontent.com/Scripter36/Minigame/master/ModPE/MinigameList.json", finishdo);
 }
 
 
