@@ -143,7 +143,7 @@ exports = (function() {
         }
         for (var i in PlayerData) Entity.addEffect(PlayerData[i].id, 7, 20, 4);
         gameData.reloadtag = true;
-        ended = true;
+        this.ended = true;
     }
 
     function PlayerDatatoString() {
